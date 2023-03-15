@@ -1,0 +1,31 @@
+pip install python-telegram-bot
+import telegram
+
+API_TOKEN = '5960174765:AAHUleO79VRa9eXaccbtHWyPOPnflnP4msU'
+
+bot = telegram.Bot(token=5960174765:AAHUleO79VRa9eXaccbtHWyPOPnflnP4msU)
+
+chat_id = 'user_or_chat_id_here'
+message_text = 'Hello, world!'
+
+bot.send_message(chat_id=chat_id, text=message_text)
+updates = bot.get_updates()
+
+for update in updates:
+    message_text = update.message.text
+    chat_id = update.message.chat_id
+    
+    bot.send_message(chat_id=chat_id, text=message_text)
+from telegram.ext import MessageHandler, Filters
+
+def handle_message(bot, update):
+    message_text = update.message.text
+    chat_id = update.message.chat_id
+    
+    bot.send_message(chat_id=chat_id, text=message_text)
+
+message_handler = MessageHandler(Filters.text, handle_message)
+dispatcher = updater.dispatcher
+dispatcher.add_handler(message_handler)
+
+updater.start_polling()
