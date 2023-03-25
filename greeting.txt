@@ -1,0 +1,26 @@
+import telegram
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+
+def start(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Hi! What's your name?")
+
+def greet(update, context):
+    name = update.message.text
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Nice to meet you, {}!".format(name))
+
+def main():
+    
+    bot = telegram.Bot(token='5960174765:AAHUleO79VRa9eXaccbtHWyPOPnflnP4msU')
+    updater = Updater(token='5960174765:AAHUleO79VRa9eXaccbtHWyPOPnflnP4msU', use_context=True)
+    dispatcher = updater.dispatcher
+
+    start_handler = CommandHandler('start', start)
+    greet_handler = MessageHandler(Filters.text & (~Filters.command), greet)
+    dispatcher.add_handler(start_handler)
+    dispatcher.add_handler(greet_handler)
+
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
